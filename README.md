@@ -9,3 +9,6 @@ To flash the IR Sensor, we are using a Tiny Programmer and Ardiuno IDE to flash 
 
 For the schematics for the R2 variant of Dave's board, check out the R2-Electronics repo.
 
+####Robo does not sell these boards individually.  
+If you want one, please check out Dave's blog here and follow the links to the appropriate store: https://miscsolutions.wordpress.com/mini-height-sensor-board/
+
