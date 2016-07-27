@@ -1,6 +1,6 @@
 R2 IR Sensor 
 ==================
-###(Based on the OrmerodSensorBoard)
+###(A port of the OrmerodSensorBoard)
 
 The IR Sensor PCBA uses two IR emitter diodes and one phototransistor to sense the nozzle distance from the build plate.  The circuit is based off Dave Crocker's Mini Differential IR board, along with his firmware.
 
