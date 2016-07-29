@@ -1,0 +1,688 @@
+# 1 ".././MiniLedSensor.cpp"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 ".././MiniLedSensor.cpp"
+# 16 ".././MiniLedSensor.cpp"
+# 1 ".././ecv.h" 1
+# 17 ".././MiniLedSensor.cpp" 2
+# 27 ".././MiniLedSensor.cpp"
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\io.h" 1 3
+# 99 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\io.h" 3
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\sfr_defs.h" 1 3
+# 126 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\sfr_defs.h" 3
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\inttypes.h" 1 3
+# 37 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\inttypes.h" 3
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\lib\\gcc\\avr\\4.9.2\\include\\stdint.h" 1 3 4
+# 9 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\lib\\gcc\\avr\\4.9.2\\include\\stdint.h" 3 4
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\stdint.h" 1 3 4
+# 125 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\stdint.h" 3 4
+typedef signed int int8_t __attribute__((__mode__(__QI__)));
+typedef unsigned int uint8_t __attribute__((__mode__(__QI__)));
+typedef signed int int16_t __attribute__ ((__mode__ (__HI__)));
+typedef unsigned int uint16_t __attribute__ ((__mode__ (__HI__)));
+typedef signed int int32_t __attribute__ ((__mode__ (__SI__)));
+typedef unsigned int uint32_t __attribute__ ((__mode__ (__SI__)));
+
+typedef signed int int64_t __attribute__((__mode__(__DI__)));
+typedef unsigned int uint64_t __attribute__((__mode__(__DI__)));
+# 146 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\stdint.h" 3 4
+typedef int16_t intptr_t;
+
+
+
+
+typedef uint16_t uintptr_t;
+# 163 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\stdint.h" 3 4
+typedef int8_t int_least8_t;
+
+
+
+
+typedef uint8_t uint_least8_t;
+
+
+
+
+typedef int16_t int_least16_t;
+
+
+
+
+typedef uint16_t uint_least16_t;
+
+
+
+
+typedef int32_t int_least32_t;
+
+
+
+
+typedef uint32_t uint_least32_t;
+
+
+
+
+
+
+
+typedef int64_t int_least64_t;
+
+
+
+
+
+
+typedef uint64_t uint_least64_t;
+# 217 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\stdint.h" 3 4
+typedef int8_t int_fast8_t;
+
+
+
+
+typedef uint8_t uint_fast8_t;
+
+
+
+
+typedef int16_t int_fast16_t;
+
+
+
+
+typedef uint16_t uint_fast16_t;
+
+
+
+
+typedef int32_t int_fast32_t;
+
+
+
+
+typedef uint32_t uint_fast32_t;
+
+
+
+
+
+
+
+typedef int64_t int_fast64_t;
+
+
+
+
+
+
+typedef uint64_t uint_fast64_t;
+# 277 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\stdint.h" 3 4
+typedef int64_t intmax_t;
+
+
+
+
+typedef uint64_t uintmax_t;
+# 10 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\lib\\gcc\\avr\\4.9.2\\include\\stdint.h" 2 3 4
+# 38 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\inttypes.h" 2 3
+# 77 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\inttypes.h" 3
+typedef int32_t int_farptr_t;
+
+
+
+typedef uint32_t uint_farptr_t;
+# 127 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\sfr_defs.h" 2 3
+# 100 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\io.h" 2 3
+# 422 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\io.h" 3
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\iotn25.h" 1 3
+# 38 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\iotn25.h" 3
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\iotnx5.h" 1 3
+# 39 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\iotn25.h" 2 3
+# 423 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\io.h" 2 3
+# 627 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\io.h" 3
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\portpins.h" 1 3
+# 628 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\io.h" 2 3
+
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\common.h" 1 3
+# 630 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\io.h" 2 3
+
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\version.h" 1 3
+# 632 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\io.h" 2 3
+
+
+
+
+
+
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\fuse.h" 1 3
+# 239 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\fuse.h" 3
+typedef struct
+{
+    unsigned char low;
+    unsigned char high;
+    unsigned char extended;
+} __fuse_t;
+# 639 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\io.h" 2 3
+
+
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\lock.h" 1 3
+# 642 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\io.h" 2 3
+# 28 ".././MiniLedSensor.cpp" 2
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\interrupt.h" 1 3
+# 29 ".././MiniLedSensor.cpp" 2
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\eeprom.h" 1 3
+# 50 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\eeprom.h" 3
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\lib\\gcc\\avr\\4.9.2\\include\\stddef.h" 1 3 4
+# 147 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\lib\\gcc\\avr\\4.9.2\\include\\stddef.h" 3 4
+typedef int ptrdiff_t;
+# 212 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\lib\\gcc\\avr\\4.9.2\\include\\stddef.h" 3 4
+typedef unsigned int size_t;
+# 51 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\eeprom.h" 2 3
+# 92 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\eeprom.h" 3
+extern "C" {
+# 137 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\eeprom.h" 3
+uint8_t eeprom_read_byte (const uint8_t *__p) __attribute__((__pure__));
+
+
+
+
+uint16_t eeprom_read_word (const uint16_t *__p) __attribute__((__pure__));
+
+
+
+
+uint32_t eeprom_read_dword (const uint32_t *__p) __attribute__((__pure__));
+
+
+
+
+float eeprom_read_float (const float *__p) __attribute__((__pure__));
+
+
+
+
+
+void eeprom_read_block (void *__dst, const void *__src, size_t __n);
+
+
+
+
+
+void eeprom_write_byte (uint8_t *__p, uint8_t __value);
+
+
+
+
+void eeprom_write_word (uint16_t *__p, uint16_t __value);
+
+
+
+
+void eeprom_write_dword (uint32_t *__p, uint32_t __value);
+
+
+
+
+void eeprom_write_float (float *__p, float __value);
+
+
+
+
+
+void eeprom_write_block (const void *__src, void *__dst, size_t __n);
+
+
+
+
+
+void eeprom_update_byte (uint8_t *__p, uint8_t __value);
+
+
+
+
+void eeprom_update_word (uint16_t *__p, uint16_t __value);
+
+
+
+
+void eeprom_update_dword (uint32_t *__p, uint32_t __value);
+
+
+
+
+void eeprom_update_float (float *__p, float __value);
+
+
+
+
+
+void eeprom_update_block (const void *__src, void *__dst, size_t __n);
+# 241 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\eeprom.h" 3
+}
+# 30 ".././MiniLedSensor.cpp" 2
+# 1 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\wdt.h" 1 3
+# 450 "c:\\program files (x86)\\atmel\\studio\\7.0\\toolchain\\avr8\\avr8-gnu-toolchain\\avr\\include\\avr\\wdt.h" 3
+static __inline__
+__attribute__ ((__always_inline__))
+void wdt_enable (const uint8_t _ecv_value)
+{
+ if ((((uint16_t) &((*(volatile uint8_t *)((0x21) + 0x20)))) < 0x40 + 0x20))
+ {
+  __asm__ __volatile__ (
+    "in __tmp_reg__,__SREG__" "\n\t"
+    "cli" "\n\t"
+    "wdr" "\n\t"
+    "out %0, %1" "\n\t"
+    "out __SREG__,__tmp_reg__" "\n\t"
+    "out %0, %2" "\n \t"
+    :
+    : "I" ((((uint16_t) &((*(volatile uint8_t *)((0x21) + 0x20)))) - 0x20)),
+    "r" ((uint8_t)((1 << (4)) | (1 << (3)))),
+    "r" ((uint8_t) ((_ecv_value & 0x08 ? (1 << (5)) : 0x00) |
+      (1 << (3)) | (_ecv_value & 0x07)) )
+    : "r0"
+  );
+ }
+ else
+ {
+  __asm__ __volatile__ (
+    "in __tmp_reg__,__SREG__" "\n\t"
+    "cli" "\n\t"
+    "wdr" "\n\t"
+    "sts %0, %1" "\n\t"
+    "out __SREG__,__tmp_reg__" "\n\t"
+    "sts %0, %2" "\n \t"
+    :
+    : "n" (((uint16_t) &((*(volatile uint8_t *)((0x21) + 0x20))))),
+    "r" ((uint8_t)((1 << (4)) | (1 << (3)))),
+    "r" ((uint8_t) ((_ecv_value & 0x08 ? (1 << (5)) : 0x00) |
+      (1 << (3)) | (_ecv_value & 0x07)) )
+    : "r0"
+  );
+ }
+}
+
+static __inline__
+__attribute__ ((__always_inline__))
+void wdt_disable (void)
+{
+ if ((((uint16_t) &((*(volatile uint8_t *)((0x21) + 0x20)))) < 0x40 + 0x20))
+ {
+        uint8_t register temp_reg;
+  __asm__ __volatile__ (
+    "in __tmp_reg__,__SREG__" "\n\t"
+    "cli" "\n\t"
+    "wdr" "\n\t"
+    "in  %[TEMPREG],%[WDTREG]" "\n\t"
+    "ori %[TEMPREG],%[WDCE_WDE]" "\n\t"
+    "out %[WDTREG],%[TEMPREG]" "\n\t"
+    "out %[WDTREG],__zero_reg__" "\n\t"
+    "out __SREG__,__tmp_reg__" "\n\t"
+    : [TEMPREG] "=d" (temp_reg)
+    : [WDTREG] "I" ((((uint16_t) &((*(volatile uint8_t *)((0x21) + 0x20)))) - 0x20)),
+    [WDCE_WDE] "n" ((uint8_t)((1 << (4)) | (1 << (3))))
+    : "r0"
+  );
+ }
+ else
+ {
+        uint8_t register temp_reg;
+  __asm__ __volatile__ (
+    "in __tmp_reg__,__SREG__" "\n\t"
+    "cli" "\n\t"
+    "wdr" "\n\t"
+    "lds %[TEMPREG],%[WDTREG]" "\n\t"
+    "ori %[TEMPREG],%[WDCE_WDE]" "\n\t"
+    "sts %[WDTREG],%[TEMPREG]" "\n\t"
+    "sts %[WDTREG],__zero_reg__" "\n\t"
+    "out __SREG__,__tmp_reg__" "\n\t"
+    : [TEMPREG] "=d" (temp_reg)
+    : [WDTREG] "n" (((uint16_t) &((*(volatile uint8_t *)((0x21) + 0x20))))),
+    [WDCE_WDE] "n" ((uint8_t)((1 << (4)) | (1 << (3))))
+    : "r0"
+  );
+ }
+}
+# 31 ".././MiniLedSensor.cpp" 2
+# 53 ".././MiniLedSensor.cpp"
+__fuse_t __fuse __attribute__((section (".fuse"))) = {0xE2u, 0xDFu, 0xFFu};
+
+
+const unsigned int AdcPhototransistorChan = 2;
+const unsigned int AdcPortBDuet10KOutputChan = 3;
+const unsigned int PortBNearLedBit = 1;
+const unsigned int PortBFarLedBit = 0;
+const unsigned int PortBDuet10KOutputBit = 3;
+const unsigned int PortBDuet12KOutputBit = 2;
+
+const uint8_t PortBUnusedBitMask = 0;
+
+
+const uint32_t F_CPU = 8000000uL;
+
+
+const uint16_t interruptFreq = 8000;
+
+const uint16_t divisorIR = (uint16_t)(F_CPU/interruptFreq);
+const uint16_t prescalerIR = 8;
+const uint16_t baseTopIR = (divisorIR/prescalerIR) - 1u;
+const uint16_t cyclesAveragedIR = 8;
+
+
+const uint16_t farThreshold = 10u * cyclesAveragedIR;
+const uint16_t saturatedThreshold = 870u * cyclesAveragedIR;
+
+const uint16_t kickFreq = 16;
+const uint16_t kickIntervalTicks = interruptFreq/kickFreq;
+
+
+typedef uint8_t irIndex_t;
+
+struct IrData
+{
+ uint16_t readings[cyclesAveragedIR];
+ volatile uint16_t sum;
+ irIndex_t index;
+
+ void addReading(uint16_t arg)
+
+
+
+
+ {
+  sum = sum - readings[index] + arg;
+  readings[index] = arg;
+  index = static_cast<irIndex_t>((index + 1u) % cyclesAveragedIR);
+ }
+
+ void init()
+
+ ;
+
+
+# 116 ".././MiniLedSensor.cpp"
+};
+
+IrData nearData, farData, offData;
+
+
+volatile uint16_t tickCounter = 0;
+uint16_t lastKickTicks = 0;
+bool digitalOutput = false;
+bool running = false;
+# 133 ".././MiniLedSensor.cpp"
+extern "C" void __vector_11 (void) __attribute__ ((signal,used, externally_visible)) ; void __vector_11 (void)
+
+
+
+
+
+{
+ uint16_t adcVal = (*(volatile uint16_t *)((0x04) + 0x20)) & 1023u;
+ uint8_t locTickCounter = (uint8_t)tickCounter;
+ while ((*(volatile uint8_t *)((0x32) + 0x20)) < 3u * 8u) {}
+ switch(locTickCounter & 0x03u)
+ {
+  case 0:
+
+   (*(volatile uint8_t *)((0x18) + 0x20)) &= ~static_cast<uint8_t>(1u << (PortBFarLedBit));
+   break;
+
+  case 1:
+
+   if (running)
+   {
+    farData.addReading(adcVal);
+   }
+   (*(volatile uint8_t *)((0x18) + 0x20)) |= static_cast<uint8_t>(1u << (PortBNearLedBit));
+   break;
+
+  case 2:
+
+   if (running)
+   {
+    offData.addReading(adcVal);
+   }
+   (*(volatile uint8_t *)((0x18) + 0x20)) &= ~static_cast<uint8_t>(1u << (PortBNearLedBit));
+   break;
+
+  case 3:
+
+   if (running)
+   {
+    nearData.addReading(adcVal);
+   }
+   (*(volatile uint8_t *)((0x18) + 0x20)) |= static_cast<uint8_t>(1u << (PortBFarLedBit));
+   break;
+ }
+ ++tickCounter;
+}
+# 204 ".././MiniLedSensor.cpp"
+inline void SetOutputOff()
+
+{
+
+ (*(volatile uint8_t *)((0x18) + 0x20)) &= ~static_cast<uint8_t>(1u << (PortBDuet10KOutputBit));
+ (*(volatile uint8_t *)((0x18) + 0x20)) &= ~static_cast<uint8_t>(1u << (PortBDuet12KOutputBit));
+}
+
+
+inline void SetOutputApproaching()
+
+{
+
+ (*(volatile uint8_t *)((0x18) + 0x20)) &= ~static_cast<uint8_t>(1u << (PortBDuet10KOutputBit));
+ (*(volatile uint8_t *)((0x18) + 0x20)) |= static_cast<uint8_t>(1u << (PortBDuet12KOutputBit));
+}
+
+
+inline void SetOutputOn()
+
+{
+
+ (*(volatile uint8_t *)((0x18) + 0x20)) |= static_cast<uint8_t>(1u << (PortBDuet10KOutputBit));
+ (*(volatile uint8_t *)((0x18) + 0x20)) &= ~static_cast<uint8_t>(1u << (PortBDuet12KOutputBit));
+}
+
+
+inline void SetOutputSaturated()
+
+{
+
+ (*(volatile uint8_t *)((0x18) + 0x20)) |= static_cast<uint8_t>(1u << (PortBDuet10KOutputBit));
+ (*(volatile uint8_t *)((0x18) + 0x20)) |= static_cast<uint8_t>(1u << (PortBDuet12KOutputBit));
+}
+
+
+inline uint16_t GetTicks()
+
+{
+ __asm__ __volatile__ ("cli" ::: "memory");
+ uint16_t ticks = tickCounter;
+ __asm__ __volatile__ ("sei" ::: "memory");
+ return ticks;
+}
+
+
+void CheckWatchdog()
+
+{
+ if (GetTicks() - lastKickTicks >= kickIntervalTicks)
+ {
+
+  __asm__ __volatile__ ("wdr");
+
+  lastKickTicks += kickIntervalTicks;
+ }
+}
+
+
+void DelayTicks(uint16_t ticks)
+
+{
+ uint16_t startTicks = GetTicks();
+ for (;;)
+ {
+  CheckWatchdog();
+  if (GetTicks() - startTicks >= ticks)
+  {
+   break;
+  }
+ }
+}
+
+
+void runIRsensor()
+
+{
+ running = false;
+ nearData.init();
+ farData.init();
+ offData.init();
+
+ __asm__ __volatile__ ("cli" ::: "memory");
+
+ (*(volatile uint8_t *)((0x2C) + 0x20)) = 0;
+ (*(volatile uint8_t *)((0x2A) + 0x20)) = static_cast<uint8_t>(1u << (1));
+ (*(volatile uint8_t *)((0x33) + 0x20)) = 0;
+ (*(volatile uint8_t *)((0x32) + 0x20)) = 0;
+ (*(volatile uint8_t *)((0x29) + 0x20)) = baseTopIR;
+ (*(volatile uint8_t *)((0x28) + 0x20)) = 0;
+ (*(volatile uint8_t *)((0x38) + 0x20)) = static_cast<uint8_t>(1u << (3));
+ (*(volatile uint8_t *)((0x39) + 0x20)) = static_cast<uint8_t>(1u << (3));
+ (*(volatile uint8_t *)((0x33) + 0x20)) |= static_cast<uint8_t>(1u << (1));
+
+ (*(volatile uint8_t *)((0x07) + 0x20)) = (uint8_t)AdcPortBDuet10KOutputChan;
+ (*(volatile uint8_t *)((0x06) + 0x20)) = static_cast<uint8_t>(1u << (7)) | static_cast<uint8_t>(1u << (2)) | static_cast<uint8_t>(1u << (5)) | static_cast<uint8_t>(1u << (1));
+ (*(volatile uint8_t *)((0x03) + 0x20)) = static_cast<uint8_t>(1u << (2)) | static_cast<uint8_t>(1u << (0));
+ tickCounter = 0;
+ lastKickTicks = 0;
+ __asm__ __volatile__ ("sei" ::: "memory");
+
+
+
+
+
+
+ SetOutputOff();
+ (*(volatile uint8_t *)((0x17) + 0x20)) &= ~static_cast<uint8_t>(1u << (PortBDuet10KOutputBit));
+
+
+ DelayTicks(4u);
+ running = true;
+ DelayTicks(4u * interruptFreq);
+ running = false;
+
+
+
+
+ digitalOutput = offData.sum + nearData.sum + farData.sum >= (3600UL * cyclesAveragedIR * 1024UL * 3u)/(160000UL + 3600UL);
+
+
+ (*(volatile uint8_t *)((0x07) + 0x20)) = (uint8_t)AdcPhototransistorChan;
+ (*(volatile uint8_t *)((0x17) + 0x20)) |= static_cast<uint8_t>(1u << (PortBDuet10KOutputBit));
+
+
+ for (uint8_t flashesToGo = (digitalOutput) ? 2u : 4u; flashesToGo != 0u; )
+ {
+  SetOutputSaturated();
+  DelayTicks(interruptFreq/4u);
+  SetOutputOff();
+  DelayTicks(interruptFreq/4u);
+  --flashesToGo;
+ }
+
+
+ nearData.init();
+ farData.init();
+ offData.init();
+
+ running = true;
+ DelayTicks(4u * cyclesAveragedIR);
+
+
+ for (;;)
+
+ {
+  __asm__ __volatile__ ("cli" ::: "memory");
+  uint16_t locNearSum = nearData.sum;
+  uint16_t locFarSum = farData.sum;
+  uint16_t locOffSum = offData.sum;
+  __asm__ __volatile__ ("sei" ::: "memory");
+
+  if (locNearSum >= saturatedThreshold || locFarSum >= saturatedThreshold)
+  {
+   SetOutputSaturated();
+  }
+  else
+  {
+   locNearSum = (locNearSum > locOffSum) ? locNearSum - locOffSum : 0;
+   locFarSum = (locFarSum > locOffSum) ? locFarSum - locOffSum : 0;
+
+
+   if (locFarSum >= farThreshold && locNearSum > locFarSum)
+   {
+    if (digitalOutput)
+    {
+     SetOutputSaturated();
+    }
+    else
+    {
+     SetOutputOn();
+    }
+   }
+   else if (!digitalOutput && locFarSum >= farThreshold && locNearSum * 6UL >= locFarSum * 5UL)
+   {
+    SetOutputApproaching();
+   }
+   else
+   {
+    SetOutputOff();
+   }
+  }
+
+  CheckWatchdog();
+ }
+}
+
+
+
+int main(void)
+
+
+
+
+{
+ __asm__ __volatile__ ("cli" ::: "memory");
+ (*(volatile uint8_t *)((0x14) + 0x20)) = static_cast<uint8_t>(1u << (AdcPhototransistorChan));
+
+
+ (*(volatile uint8_t *)((0x18) + 0x20)) = PortBUnusedBitMask;
+
+
+ (*(volatile uint8_t *)((0x17) + 0x20)) = static_cast<uint8_t>(1u << (PortBNearLedBit)) | static_cast<uint8_t>(1u << (PortBFarLedBit)) | static_cast<uint8_t>(1u << (PortBDuet10KOutputBit)) | static_cast<uint8_t>(1u << (PortBDuet12KOutputBit));
+
+ __asm__ __volatile__ ("sei" ::: "memory");
+
+
+ wdt_enable(5);
+
+
+ runIRsensor();
+ return 0;
+}
+
+
+void IrData::init()
+{
+ for (uint8_t i = 0; i < cyclesAveragedIR; ++i)
+
+
+
+
+ {
+  readings[i] = 0;
+ }
+ index = 0;
+ sum = 0;
+}
