@@ -6,7 +6,7 @@ The IR Sensor PCBA uses two IR emitter diodes and one phototransistor to sense t
 
 This folder contains the firmware sources, including the compiled .hex file. The firmware is compiled in Atmel Studio (with the ATTiny library installed). The .pdp files are for doing static checking or formal verification of the firmware using Escher C++ Verifier.  
 
-To flash the IR Sensor, we are using a Tiny Programmer and avrdude to flash the .hex file to the MCU.  
+To program the ATTiny25 mcu, we are using a Tiny Programmer (or JTAGICE MKII) and avrdude to flash the .hex file to the MCU.  
 
 ```avrdude -c usbtiny -p t25 -U flash:w:MiniLedSensor.hex```
 
