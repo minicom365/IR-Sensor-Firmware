@@ -6,7 +6,10 @@ The IR Sensor PCBA uses two IR emitter diodes and one phototransistor to sense t
 
 This folder contains the firmware sources, including the compiled .hex file. The firmware is compiled in Atmel Studio. The .pdp files are for doing static checking or formal verification of the firmware using Escher C++ Verifier.  
 
-To flash the IR Sensor, we are using a Tiny Programmer and Ardiuno IDE to flash the .hex file to the MCU.  There are a couple library dependencies required to make this work.  More documentation is needed on this part.
+To flash the IR Sensor, we are using a Tiny Programmer and avrdude to flash the .hex file to the MCU.  
+```avrdude -c usbtiny -p t25 -U flash:w:MiniLedSensor.hex```
+
+There are a couple library dependencies required to make this work.  More documentation is needed on this part.
 
 For the schematics for the R2 variant of Dave's board, check out the R2-Electronics repo.
 
