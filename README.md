@@ -2,15 +2,18 @@ R2 IR Sensor
 ==================
 ###(Based on the OrmerodSensorBoard)
 
-The IR Sensor PCBA uses two IR emitter diodes and one phototransistor to sense the nozzle distance from the build plate.  The circuit is based off Dave Crocker's Mini Differential IR board, along with his V1 firmware.  
+The IR Sensor PCBA uses two IR emitter diodes and one phototransistor to sense the nozzle distance from the build plate.  The circuit is based off Dave Crocker's (dc42) Mini Differential IR board, along with his V1 firmware.  
 
 This folder contains the firmware sources, including the compiled .hex file. The firmware is compiled in Atmel Studio (with the ATTiny library installed). The .pdp files are for doing static checking or formal verification of the firmware using Escher C++ Verifier.  
 
 To program the ATTiny25 mcu, we are using a Tiny Programmer (or JTAGICE MKII) and avrdude to flash the .hex file to the MCU.  
 
-```avrdude -c usbtiny -p t25 -U flash:w:MiniLedSensor.hex```
+```avrdude -c <programmertype> -p t25 -U flash:w:MiniLedSensor.hex```
 
-For the schematics for the R2 variant of Dave's board, check out the R2-Electronics repo.
+To write the fuse value (low fuse):
+```avrdude -c <programmertype> -p t25 -U lfuse:w:0xe2:m```
+
+For the schematics for the R2 variant of Dave's board, email developer@robo3d.com.
 
 ###Robo does not sell these boards individually!
 
