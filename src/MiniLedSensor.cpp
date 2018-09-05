@@ -63,7 +63,7 @@ const unsigned int PortBDuet12KOutputBit = 2;
 const uint8_t PortBUnusedBitMask = 0;
 
 // Approximate MPU frequency (8MHz internal oscillator)
-const uint32_t F_CPU = 8000000uL;
+//const uint32_t F_CPU = 8000000uL;
 
 // IR parameters. These also allow us to receive a signal through the command input.
 const uint16_t interruptFreq = 8000;						// interrupt frequency. We run the IR sensor at one quarter of this, i.e. 2kHz

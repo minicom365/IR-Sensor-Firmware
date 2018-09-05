@@ -19,3 +19,12 @@ For the schematics for the R2 variant of Dave's board, email developer@robo3d.co
 
 If you want to get your hands on the latest version of Dave's Mini IR sensor, please check out his blog and follow the links to the appropriate store: https://miscsolutions.wordpress.com/mini-height-sensor-board/
 
+### Upload code
+```
+avrdude -c usbasp -p t25 -P usb -u -Uflash:w:firmware.hex:a -U lfuse:w:0xe2:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m
+```
+
+or just run
+```
+platformio -t upload
+```
