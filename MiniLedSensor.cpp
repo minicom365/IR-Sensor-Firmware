@@ -98,7 +98,6 @@ IrData nearData, farData, offData;
 // General variables
 volatile uint16_t tickCounter = 0;					// counts system ticks, lower 2 bits also used for ADC/LED state
 uint16_t lastKickTicks = 0;							// when we last kicked the watchdog
-bool digitalOutput = false;
 bool running = false;
 
 
@@ -225,7 +224,7 @@ writes(lastKickTicks; volatile)
 
 // Run the IR sensor and the fan
 void runIRsensor()
-writes(running; nearData; farData; offData; lastKickTicks; digitalOutput; volatile)
+writes(running; nearData; farData; offData; lastKickTicks)
 {
 	running = false;
 	nearData.init();
@@ -257,33 +256,17 @@ writes(running; nearData; farData; offData; lastKickTicks; digitalOutput; volati
 	// Wait a while before we do this test, so that Duet firmware has a chance to turn the internal pullup (50K to 150K) off,
 	// and Arduino/RAMPS firmware has a chance to turn the internal pullup (20K to 50K) on.
 	SetOutputOff();
-	DDRB &= ~BITVAL(PortBDuet10KOutputBit);					// set the pin to an input, pullup disabled because output is off
 	
-	// Wait 4 seconds, keeping the watchdog happy
-	DelayTicks(4u);											// ignore the readings from the first few interrupts after changing mode
-	running = true;											// start collecting readings
-	DelayTicks(4u * interruptFreq);							// give the printer electronics time to enable/disable its pullup resistor
-	running = false;										// stop collecting readings
 	
 	// Readings have been collected into all three of nearData, farData, and offData.
 	// We are looking for a pullup resistor of no more than 75K on the output to indicate that we should use a digital output.
 	// DC 2014-08-04 we now look for no more than 160K, because on the Arduino Due the pullups are in the range 50K-150K.
-	digitalOutput = offData.sum + nearData.sum + farData.sum >= (3600UL * cyclesAveragedIR * 1024UL * 3u)/(160000UL + 3600UL);
+	//digitalOutput = offData.sum + nearData.sum + farData.sum >= (3600UL * cyclesAveragedIR * 1024UL * 3u)/(160000UL + 3600UL);
 	
 	// Change back to normal operation mode
 	ADMUX = (uint8_t)AdcPhototransistorChan;				// select input 1 = phototransistor, single ended mode
 	DDRB |= BITVAL(PortBDuet10KOutputBit);					// set the pin back to being an output
 
-	// Flash the LED twice if we are providing a digital output, four times if we are providing an analog output
-	for (uint8_t flashesToGo = (digitalOutput) ? 2u : 4u; flashesToGo != 0u; )
-	{
-		SetOutputSaturated();								// turn LED on
-		DelayTicks(interruptFreq/4u);
-		SetOutputOff();
-		DelayTicks(interruptFreq/4u);
-		--flashesToGo;
-	}
-	
 	// Clear out the data and start collecting data from the phototransistor
 	nearData.init();
 	farData.init();
@@ -312,24 +295,10 @@ writes(running; nearData; farData; offData; lastKickTicks; digitalOutput; volati
 			locFarSum = (locFarSum > locOffSum) ? locFarSum - locOffSum : 0;
 			
 			// Differential modulated IR sensor mode								
-			if (locFarSum >= farThreshold && locNearSum > locFarSum)
-			{
-				if (digitalOutput)
-				{
-					SetOutputSaturated();
-				}
-				else
-				{
-					SetOutputOn();					
-				}
-			}
-			else if (!digitalOutput && locFarSum >= farThreshold && locNearSum * 6UL >= locFarSum * 5UL)
-			{
-				SetOutputApproaching();
-			}
-			else
-			{
-				SetOutputOff();
+			if (locFarSum >= farThreshold && locNearSum > locFarSum) {
+                          SetOutputSaturated();
+			} else {
+                          SetOutputOff();
 			}
 		}
 
@@ -341,7 +310,7 @@ writes(running; nearData; farData; offData; lastKickTicks; digitalOutput; volati
 // Main program
 int main(void)
 writes(volatile)
-writes(running; digitalOutput)
+writes(running)
 writes(nearData; farData; offData)	// IR variables
 writes(lastKickTicks)
 {
