@@ -15,27 +15,11 @@
 
 #include "ecv.h"
 
-#ifdef __ECV__
-#define __attribute__(_x)
-#define __volatile__
-#endif
-
-#ifdef __ECV__
-#pragma ECV noverifyincludefiles
-#endif
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/eeprom.h>
 #include <avr/wdt.h>
-
-#ifdef __ECV__
-#pragma ECV verifyincludefiles
-#undef cli
-#undef sei
-extern void cli();
-extern void sei();
-#endif
 
 #define ISR_DEBUG	(0)		// set nonzero to use PB2 as debug output pin
 
@@ -49,9 +33,7 @@ extern void sei();
 // PB4/ADC2			input from phototransistor
 // PB5/ADC0/RESET	not available, used for programming
 
-#ifndef __ECV__
 __fuse_t __fuse __attribute__((section (".fuse"))) = {0xE2u, 0xDFu, 0xFFu};
-#endif
 
 const unsigned int AdcPhototransistorChan = 2;				// ADC channel for the phototransistor
 const unsigned int AdcPortBDuet10KOutputChan = 3;			// ADC channel for the 10K output bit, when we use it as an input
@@ -63,12 +45,12 @@ const unsigned int PortBDuet12KOutputBit = 2;
 const uint8_t PortBUnusedBitMask = 0;
 
 // Approximate MPU frequency (8MHz internal oscillator)
-const uint32_t F_CPU = 8000000uL;
+const uint32_t F_CPU2 = 8000000uL;
 
 // IR parameters. These also allow us to receive a signal through the command input.
 const uint16_t interruptFreq = 8000;						// interrupt frequency. We run the IR sensor at one quarter of this, i.e. 2kHz
 															// highest usable value is about 9.25kHz because the ADC needs 13.5 clock cycles per conversion.
-const uint16_t divisorIR = (uint16_t)(F_CPU/interruptFreq);
+const uint16_t divisorIR = (uint16_t)(F_CPU2/interruptFreq);
 const uint16_t prescalerIR = 8;								// needs to be high enough to get baseTopIR below 256
 const uint16_t baseTopIR = (divisorIR/prescalerIR) - 1u;
 const uint16_t cyclesAveragedIR = 8;						// must be a power of 2, max 64 (unless we make onSumIR and offSumIR uint32_t)
@@ -109,10 +91,6 @@ struct IrData
 			returns((forall r in readings :- r <= 1023) && sum == + over readings);
 	)
 	
-#ifdef __ECV__
-	// Dummy constructor to keep eCv happy
-	IrData() : index(0) {}
-#endif
 };
 
 IrData nearData, farData, offData;
@@ -127,11 +105,7 @@ bool running = false;
 // ISR for the timer 0 compare match A interrupt
 // This works on a cycle of 4 readings as follows:
 // far led on, near led on, leds off, null
-#ifdef __ECV__
-void TIM0_COMPB_vect()
-#else
 ISR(TIM0_COMPB_vect)
-#endif
 writes(nearData; farData; offData)
 writes(volatile)
 pre(nearData.invar(); farData.invar(); offData.invar())
@@ -176,29 +150,6 @@ post(nearData.invar(); farData.invar(); offData.invar())
 	}
 	++tickCounter;
 }
-
-#if 0	// unused at present
-
-// Delay for a little while
-// Each iteration of the loop takes 4 clocks plus one clock per NOP instruction in the body.
-// The additional overhead for the function, including calling it, is 12 clocks.
-// Therefore, with F_CPU = 8MHz and using 4 NOP instructions, it delays n + 1.5 microseconds.
-void shortDelay(uint8_t n)
-{
-	for (uint8_t i = 0; i < n; ++i)
-	keep(i <= n)
-	decrease(n - i)
-	{
-#ifndef __ECV__			// eCv doesn't understand asm
-		asm volatile ("nop");
-		asm volatile ("nop");
-		asm volatile ("nop");
-		asm volatile ("nop");
-#endif
-	}
-}
-
-#endif
 
 // Give a G31 reading of about 0
 inline void SetOutputOff()
@@ -252,9 +203,7 @@ writes(lastKickTicks; volatile)
 {
 	if (GetTicks() - lastKickTicks >= kickIntervalTicks)
 	{
-#ifndef __ECV__
 		wdt_reset();											// kick the watchdog
-#endif
 		lastKickTicks += kickIntervalTicks;
 	}
 }
@@ -407,9 +356,7 @@ writes(lastKickTicks)
 	
 	sei();
 
-#ifndef __ECV__												// eCv++ doesn't understand gcc assembler syntax
 	wdt_enable(WDTO_500MS);									// enable the watchdog (we kick it when checking the fan)	
-#endif
 		
 	runIRsensor();											// doesn't return
 	return 0;												// to keep gcc happy
