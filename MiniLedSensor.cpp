@@ -1,18 +1,10 @@
 /*
- * MiniLedSensor.cpp
+ * MiniLedSensor.cpp - ATtiny13/85 호환 버전
  *
  * Created: 03/05/2015 11:06:12
  *  Author: David Crocker, Escher Technologies Ltd.
- * Licensed under the GNU General Public License version 3. See http://www.gnu.org/licenses/gpl-3.0.en.html.
- * This software is supplied WITHOUT WARRANTY except when it is supplied pre-programmed into
- * an electronic device that was manufactured by or for Escher Technologies Limited.
+ * Licensed under the GNU General Public License version 3.
  */ 
-
-// Version 3: changed modulation scheme to allow for charging/discharging of phototransistor base-collector capacitance
-// Version 4: increased maximum value of the pullup resistor we look for to 150K, because it is higher on the Arduino Due
-// Version 5: increased maximum value of the pullup resistor we look for to 160K, to get reliable results with the 150K resistor in the test rig
-// Version 6: Don't enable pullup resistor on phototransistor input
-// Version 7: By Ivan Volosyuk: rewrite without interrupts and with ADC noise reduction
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -20,19 +12,68 @@
 #include <avr/wdt.h>
 #include <avr/sleep.h>
 
-#define ISR_DEBUG	(0)		// set nonzero to use PB2 as debug output pin
+// MCU 타입 감지 및 디버그 정보
+#if defined(__AVR_ATtiny13__) || defined(__AVR_ATtiny13A__)
+    #define MCU_TYPE "ATtiny13"
+    #define IS_ATTINY13 1
+#elif defined(__AVR_ATtiny85__)
+    #define MCU_TYPE "ATtiny85" 
+    #define IS_ATTINY13 0
+#else
+    #define MCU_TYPE "Unknown"
+    #define IS_ATTINY13 0
+    #warning "Unknown MCU type - using default fuse settings"
+#endif
 
+// 조건부 퓨즈 설정
+#if IS_ATTINY13
+    // ATtiny13 전용 퓨즈: BOD 4.3V, SPIEN 활성화로 ATtiny85와 동일한 기능
+    __fuse_t __fuse __attribute__((section (".fuse"))) = {
+        0xE0u,  // Low Fuse: BOD 4.3V (BODLEVEL[1:0] = 00)
+        0xF7u,  // High Fuse: SPIEN=0, RSTDISBL=1, 기타 동일
+        0xFFu   // Extended Fuse: 기본값
+    };
+    
+    // 컴파일 타임 메시지
+    #pragma message "Compiling for ATtiny13 with custom fuse settings"
+    #pragma message "Low Fuse: 0xE0 (BOD 4.3V)"
+    #pragma message "High Fuse: 0xF7 (SPIEN enabled)"
+    
+#elif defined(__AVR_ATtiny85__)
+    // ATtiny85 원본 퓨즈 설정
+    __fuse_t __fuse __attribute__((section (".fuse"))) = {
+        0xE2u,  // Low Fuse: 원본 설정
+        0xDFu,  // High Fuse: 원본 설정  
+        0xFFu   // Extended Fuse: 원본 설정
+    };
+    
+    #pragma message "Compiling for ATtiny85 with original fuse settings"
+    #pragma message "Low Fuse: 0xE2, High Fuse: 0xDF"
+    
+#else
+    // 기타 ATtiny 시리즈용 안전한 기본 설정
+    // 주의: 0xFF는 SPIEN=1로 설정되어 SPI 프로그래밍이 비활성화됨
+    // 대신 0xD7을 사용하여 SPI 프로그래밍을 활성화 상태로 유지
+    __fuse_t __fuse __attribute__((section (".fuse"))) = {
+        0x62u,  // Low Fuse: 내부 8MHz 오실레이터, 안전한 기본값
+        0xD7u,  // High Fuse: SPIEN=0 (SPI 활성화), 안전한 기본값  
+        0xFFu   // Extended Fuse: 안전한 기본값
+    };
+    
+    #pragma message "Using safe default fuse settings for ATtiny series"
+    #pragma message "Low Fuse: 0x62 (8MHz internal), High Fuse: 0xD7 (SPI enabled)"
+#endif
+
+#define ISR_DEBUG	(0)		// set nonzero to use PB2 as debug output pin
 #define BITVAL(_x) static_cast<uint8_t>(1u << (_x))
 
-// Pin assignments:
+// Pin assignments (ATtiny13/85 공통)
 // PB0/MOSI			far LED drive, active high
 // PB1/MISO			near LED drive, active high
 // PB2/ADC1/SCK	        	output to Duet via 12K resistor
 // PB3/ADC3			output to Duet via 10K resistor
 // PB4/ADC2			input from phototransistor
 // PB5/ADC0/RESET       	not available, used for programming
-
-__fuse_t __fuse __attribute__((section (".fuse"))) = {0xE2u, 0xDFu, 0xFFu};
 
 const unsigned int AdcPhototransistorChan = 2;				// ADC channel for the phototransistor
 const unsigned int AdcPortBDuet10KOutputChan = 3;			// ADC channel for the 10K output bit, when we use it as an input
@@ -42,6 +83,13 @@ const unsigned int PortBDuet10KOutputBit = 3;
 const unsigned int PortBDuet12KOutputBit = 2;
 const uint8_t OutputOn = BITVAL(PortBDuet10KOutputBit) | BITVAL(PortBDuet12KOutputBit);
 const uint8_t PortBUnusedBitMask = 0;
+
+// 메모리 사용량 체크 (ATtiny13용)
+#if IS_ATTINY13
+    #if defined(__AVR_ATtiny13__) && (__AVR_ATtiny13__ == 1)
+        #pragma message "WARNING: ATtiny13 has only 1KB flash memory - code size optimization recommended"
+    #endif
+#endif
 
 ISR(ADC_vect) { // ADC interrupt handler
 }
@@ -103,7 +151,6 @@ void runIRsensor() {
       PORTB = output;
     }
   }
-
 
 // Main program
 int main(void) {
