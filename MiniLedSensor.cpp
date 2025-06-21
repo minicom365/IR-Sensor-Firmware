@@ -25,6 +25,19 @@
     #warning "Unknown MCU type - using default fuse settings"
 #endif
 
+// 레지스터 호환성 매크로 정의
+#if IS_ATTINY13
+    // ATtiny13에서는 TIFR0가 TIFR로 명명됨
+    #ifndef TIFR0
+        #define TIFR0 TIFR
+    #endif
+#else
+    // ATtiny85에서는 TIFR0 사용
+    #ifndef TIFR0
+        #define TIFR0 TIFR
+    #endif
+#endif
+
 // 조건부 퓨즈 설정
 #if IS_ATTINY13
     // ATtiny13 전용 퓨즈: BOD 4.3V, SPIEN 활성화로 ATtiny85와 동일한 기능
@@ -108,7 +121,7 @@ void startADC() {
 // Run the IR sensor and the fan
 void runIRsensor() {
     cli();
-    TIFR = BITVAL(OCF0B); // clear any pending interrupt
+    TIFR0 = BITVAL(OCF0B); // clear any pending interrupt - 수정된 부분
 
     ADMUX = (uint8_t)AdcPortBDuet10KOutputChan; // select the 10K resistor output bit, single ended mode
     ADCSRA = BITVAL(ADEN) | BITVAL(ADIE);	// enable ADC
